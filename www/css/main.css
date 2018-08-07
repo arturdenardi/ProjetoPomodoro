@@ -5,9 +5,7 @@ body{
 	text-align: center;
 }
 
-img{
-	filter: invert(100%);
-}
+
 h2{
 	margin-top: 2em;
 	font-weight: bolder;
