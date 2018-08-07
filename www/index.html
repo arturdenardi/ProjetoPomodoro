@@ -38,7 +38,86 @@
 
 <script src="js/jquery-3.3.1.min.js"></script>
 <script>
+	var contagem_segundos =$("h1 span.segundos");
+	var contagem_minutos =$("h1 span.minuto")
+	var iniciar =$('button.iniciar');
+
+	var pomodoro =$('button.pomodoro');
+	var descanso =$('button.descanso');
+	var flag = 0;
+
 	
+
+function contagem(){
+	intervalo=setInterval(function(){
+			var contagem_atual_segundos = contagem_segundos.text();
+			var contagem_atual_minutos = contagem_minutos.text();
+
+			$('button.iniciar').fadeOut();
+		
+
+			if (contagem_atual_segundos == 0 && contagem_atual_minutos == 0) {
+				clearInterval(intervalo);
+				$(".janela").fadeIn();
+
+				
+					if (flag != 0) {
+					$("button.descanso").fadeIn();
+				}
+					
+					var flush = new Audio('sound/alarme.mp3');
+					flush.play();
+
+					
+					console.log (flag);
+					
+			}else{
+			if (contagem_atual_segundos == 0) {
+				contagem_segundos.text("59");
+				/*console.log (contagem_atual_minutos);*/
+				contagem_minutos.text(parseInt(contagem_atual_minutos)-1);
+
+			}else{
+				contagem_segundos.text(parseInt(contagem_atual_segundos)-1);
+			}
+		}
+		}, 1000);
+}
+
+	iniciar.on("click",function(){
+		/*console.log ("hello world")*/
+		contagem();
+		flag += 1;
+
+	});
+/*-------------------------------------------------------------------------------------------------*/
+	pomodoro.on("click",function(){	
+	contagem_minutos.text (25);
+	contagem_segundos.text (00);
+		$(".janela").fadeOut();		
+		contagem();
+		flag += 1;
+		$("body").css({"background":"#e74c3c"});
+		$("button").css({"background":"#e74c3c"});
+		$(".janela").css({"background":"#e74c3c"});
+	}); 
+
+/*-------------------------------------------------------------------------------------------------*/
+	descanso.on("click",function(){	
+		contagem_minutos.text (5 * flag);
+		contagem_segundos.text (00);
+		$(".janela").fadeOut();		
+		contagem();
+		flag = 0;
+		$("button.descanso").fadeOut();
+		$("body").css({"background":"#3498db"});
+		$("button").css({"background":"#3498db"});
+		$(".janela").css({"background":"#3498db"});
+
+	
+	}); 
+/*-------------------------------------------------------------------------------------------------*/
+
 
 </script>
 </body>
